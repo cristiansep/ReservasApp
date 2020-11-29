@@ -37,17 +37,12 @@ import { AuthContext } from "../../context/auth/AuthContext";
 const adminLinks = [
 
   { id: 0, label: "Dashboard", link: "/dashboard", icon: <HomeIcon /> },
-  {
-    id: 1,
-    label: "Reservas",
-    link: "/reservas",
-    icon: <DateRangeIcon />,
-  },
-  { id: 2, label: "Tables", link: "/reservas", icon: <TableIcon /> },
+  {id: 1,label: "Reservas",link: "/reservas", icon: <DateRangeIcon />,},
+  { id: 2, label: "usuarios", link: "/usuarios", icon: <TableIcon /> },
   {
     id: 3,
-    label: "Notifications",
-    link: "/notifications",
+    label: "Especialidades",
+    link: "/especialidades",
     icon: <NotificationsIcon />,
   },
   {

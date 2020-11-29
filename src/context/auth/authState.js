@@ -6,9 +6,6 @@ import { types } from "../../types/types";
 import {AuthContext} from './AuthContext';
 import {authReducer} from './authReducer';
 
-// const init = () => {
-//     return JSON.parse(localStorage.getItem('user')) || {checking: false};
-//   }
 
 const initialState = {
     checking: true
@@ -32,11 +29,6 @@ export const AuthState = props => {
                 localStorage.setItem("token", body.token);
                 localStorage.setItem("token-init-date", new Date().getTime());
 
-                // dispatch({
-                //   type: types.authLogin,
-                //   payload: body,
-                // });
-
                 dispatch(login({
                     uid: body.uid,
                     name: body.name,
@@ -59,6 +51,39 @@ export const AuthState = props => {
     });
 
 
+    const startRegister = async datos => {
+
+        const resp = await fetchSinToken('auth/new',datos,'POST');
+        const body = await resp.json();
+
+        try {
+
+              
+            if(body.ok) {
+            localStorage.setItem("token", body.token);
+            localStorage.setItem("token-init-date", new Date().getTime());
+
+            dispatch(login({
+                uid: body.uid,
+                name: body.name,
+                rol: body.rol
+            }));
+
+        }else {
+            console.log(body.msg);
+            Swal.fire('Error', body.msg, 'error');
+        }
+
+            
+        } catch (error) {
+            console.log(error)
+        }
+      
+
+       
+    }
+
+
 
     const startChecking = async() => {
 
@@ -67,7 +92,6 @@ export const AuthState = props => {
             const resp = await fetchConToken('auth/renew');
             const body = await resp.json();
 
-            // console.log(body);
             
             if(body.ok) {
                 localStorage.setItem("token", body.token);
@@ -111,7 +135,7 @@ export const AuthState = props => {
 
 
     return (
-        <AuthContext.Provider value={{user, dispatch, iniciarSesion, startChecking, startLogout}}>
+        <AuthContext.Provider value={{user, dispatch, iniciarSesion, startChecking, startLogout,startRegister}}>
             {props.children}
         </AuthContext.Provider>
     )

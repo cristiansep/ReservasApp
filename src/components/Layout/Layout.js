@@ -23,6 +23,10 @@ import Sidebar from "../Sidebar/Sidebar";
 import { useLayoutState } from "../../context/LayoutContext";
 import { Doctor } from "../../pages/doctor/Doctor";
 import { Reservas } from "../../pages/reservas/Reservas";
+import { UserList } from "../../pages/ususarios/UserList";
+import { CrearUsuario } from "../../pages/ususarios/CrearUsuario";
+import { SpecialtyList } from "../../pages/especialidades/SpecialtyList";
+
 
 function Layout(props) {
   var classes = useStyles();
@@ -44,6 +48,9 @@ function Layout(props) {
             <Switch>
               <Route path="/dashboard" component={Doctor} />
               <Route path="/reservas" component={Reservas} />
+              <Route path="/usuarios" component={UserList} />
+              <Route path="/create-user" component={CrearUsuario} />
+              <Route path="/especialidades" component={SpecialtyList} />
               {/* <Route path="/app/typography" component={Typography} />
               <Route path="/app/tables" component={Tables} />
               <Route path="/app/notifications" component={Notifications} />

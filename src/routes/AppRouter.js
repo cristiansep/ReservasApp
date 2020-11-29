@@ -4,6 +4,7 @@ import Layout from '../components/Layout/Layout';
 import { AuthContext } from '../context/auth/AuthContext';
 import Error from '../pages/error/Error';
 import { Login } from '../pages/login/Login';
+import { Register } from '../pages/register/Register';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 
@@ -17,9 +18,11 @@ export const AppRouter = () => {
 
   const {checking, uid} = user;
 
+
   
   useEffect(() => {
 
+    // startChecking();
     setScheking();
     
   },[scheking]);
@@ -35,6 +38,13 @@ export const AppRouter = () => {
             exact 
             path="/login" 
             component={Login} 
+            isAuthenticated={!!uid}
+            />
+
+            <PublicRoute 
+            exact 
+            path="/register" 
+            component={Register} 
             isAuthenticated={!!uid}
             />
 
