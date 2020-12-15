@@ -38,36 +38,44 @@ const adminLinks = [
 
   { id: 0, label: "Dashboard", link: "/dashboard", icon: <HomeIcon /> },
   {id: 1,label: "Reservas",link: "/reservas", icon: <DateRangeIcon />,},
-  { id: 2, label: "usuarios", link: "/usuarios", icon: <TableIcon /> },
+  { id: 2, label: "Pacientes", link: "/usuarios", icon: <TableIcon /> },
+  { id: 4, label: "Médicos", link: "/medicos", icon: <TableIcon /> },
   {
     id: 3,
     label: "Especialidades",
     link: "/especialidades",
     icon: <NotificationsIcon />,
   },
-  {
-    id: 4,
-    label: "UI Elements",
-    link: "/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Icons", link: "/ui/icons" },
-      { label: "Charts", link: "/ui/charts" },
-      { label: "Maps", link: "/ui/maps" },
-    ],
-  },
-  { id: 5, type: "divider" },
-  { id: 6, type: "title", label: "HELP" },
-  { id: 7, label: "Library", link: "", icon: <LibraryIcon /> },
-  { id: 8, label: "Support", link: "", icon: <SupportIcon /> },
-  { id: 9, label: "FAQ", link: "", icon: <FAQIcon /> },
-  { id: 10, type: "divider" },
+  // {
+  //   id: 5,
+  //   label: "Gestionar Horario",
+  //   link: "/horario",
+  //   icon: <NotificationsIcon />,
+  // },
+  // {
+  //   id: 4,
+  //   label: "UI Elements",
+  //   link: "/ui",
+  //   icon: <UIElementsIcon />,
+  //   children: [
+  //     { label: "Icons", link: "/ui/icons" },
+  //     { label: "Charts", link: "/ui/charts" },
+  //     { label: "Maps", link: "/ui/maps" },
+  //   ],
+  // },
+  // { id: 5, type: "divider" },
+  // { id: 6, type: "title", label: "HELP" },
+  // { id: 7, label: "Library", link: "", icon: <LibraryIcon /> },
+  // { id: 8, label: "Support", link: "", icon: <SupportIcon /> },
+  // { id: 9, label: "FAQ", link: "", icon: <FAQIcon /> },
+  // { id: 10, type: "divider" },
 ];
 
 
 const doctorlinks = [
   { id: 0, label: "Dashboard", link: "/dashboard", icon: <HomeIcon /> },
-  {id: 1, label: "Reservas", link: "/reservas", icon: <DateRangeIcon />,},
+  {id: 1, label: "Reservas", link: "/reservas", icon: <DateRangeIcon />},
+  {id: 2,label: "Gestionar Horario",link: "/horario",icon: <NotificationsIcon />},
 ]
 
 const usuarioLinks = [

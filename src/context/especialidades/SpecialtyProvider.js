@@ -29,7 +29,6 @@ export const SpecialtyProvider = props => {
             const resp = await fetchConToken('specialty');
             const body = await resp.json();
 
-            console.log(body.especialidades)
             const specialties = body.especialidades;
 
             dispatch(specialtiesLoaded(specialties));
@@ -47,36 +46,53 @@ export const SpecialtyProvider = props => {
     });
 
 
+    const specialtyCreated = async (datos) => {
+
+      const resp = await fetchConToken("specialty/new", datos, "POST");
+      const body = await resp.json();
+
+      try {
+        if (body.ok) {
+          dispatch({
+            type: types.specialtyCreate,
+            payload: datos,
+          });
+          Swal.fire("Success", body.msg, "success");
+        } else {
+          console.log(body.msg);
+          Swal.fire("Error", body.msg, "error");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
 
 
 
+    const specialtyStartUpdate = async (specialty) => {
 
-    // const specialtyStartUpdate = async (user) => {
-    //     try {
-    //       // if (id === uid) {
-    //       //   return Swal.fire("Error", "No puede borrarse a si mismo", "error");
-    //       // }
+        try {
   
-    //       const resp = await fetchConToken(`user/${user.id}`, user, "PUT");
-    //       const body = await resp.json();
+          const resp = await fetchConToken(`specialty/${specialty.id}`, specialty, "PUT");
+          const body = await resp.json();
   
-    //       // console.log(body);
-    //       if (body.ok) {
-    //         dispatch({
-    //           type: types.userUpdated,
-    //           payload: user
-    //         });
-    //         Swal.fire("Success", body.msg, "success");
-    //       } else {
-    //         Swal.fire("Error", body.msg, "error");
-    //       }
+          // console.log(body);
+          if (body.ok) {
+            dispatch({
+              type: types.specialtyUpdated,
+              payload: specialty
+            });
+            Swal.fire("Success", body.msg, "success");
+          } else {
+            Swal.fire("Error", body.msg, "error");
+          }
   
           
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
   
       const guardarEspecialidadActual = specialty => {
@@ -86,7 +102,11 @@ export const SpecialtyProvider = props => {
           })  
       }
 
-
+      const ClearSpecialtySelect = () => {
+        dispatch({
+          type: types.specialtySelectClear
+        });
+      }
 
 
       
@@ -118,16 +138,13 @@ export const SpecialtyProvider = props => {
                 state, 
                 dispatch,
                 specialties:state.specialties,
-                // usuarioCreado:state.usuarioCreado,
                 specialtySelect: state.specialtySelect,
                 specialtiesStartLoading,
+                specialtyCreated,
                 guardarEspecialidadActual,
-                specialtyStartDelete
-                // usersStartLoading,
-                // userStartDelete,
-                // crearUsuario,
-                // guardarUsuarioActual,
-                // userStartUpdate
+                specialtyStartUpdate,
+                specialtyStartDelete,
+                ClearSpecialtySelect
             }}>
             {props.children}
         </SpecialtyContext.Provider>

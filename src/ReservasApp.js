@@ -7,6 +7,8 @@ import { AppRouter } from './routes/AppRouter';
 import { AuthState } from './context/auth/authState';
 import { UsuarioProvider } from './context/usuarios/UsuarioProvider';
 import { SpecialtyProvider } from './context/especialidades/SpecialtyProvider';
+import { ModalProvider } from './context/modal/ModalProvider';
+import { ScheduleProvider } from './context/schedule/ScheduleProvider';
 
 
 
@@ -15,18 +17,21 @@ export const ReservasApp = () => {
 
 
   return (
-   
     <AuthState>
-    <UsuarioProvider>
-      <SpecialtyProvider>
-    <LayoutProvider>
-      <ThemeProvider theme={Themes.default}>
-        <CssBaseline />
-        <AppRouter />
-      </ThemeProvider>
-    </LayoutProvider>
-    </SpecialtyProvider>
-    </UsuarioProvider>
+      <UsuarioProvider>
+        <SpecialtyProvider>
+          <LayoutProvider>
+            <ScheduleProvider>
+            <ModalProvider>
+              <ThemeProvider theme={Themes.default}>
+                <CssBaseline />
+                <AppRouter />
+              </ThemeProvider>
+            </ModalProvider>
+            </ScheduleProvider>
+          </LayoutProvider>
+        </SpecialtyProvider>
+      </UsuarioProvider>
     </AuthState>
   );
 };

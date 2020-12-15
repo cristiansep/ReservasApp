@@ -28,13 +28,13 @@ export const Register = () => {
 
   const {startRegister} = useContext(AuthContext);
 
-  const [ formValues, handleInputChange] = useForm({
-    nombre: '',
-    apellidoP: '',
-    apellidoM: '',
+  const [ formValues, setFormValues , handleInputChange] = useForm({
+    nombre: 'Test',
+    apellidoP: 'Apellido Paterno',
+    apellidoM: 'Apellido Materno',
     email: '',
-    password: '',
-    calle: ''
+    password: '123',
+    calle: 'Lo que sea'
 
   });
 
@@ -44,14 +44,17 @@ export const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     
-    startRegister({
-      nombre, 
-      apellidoP, 
-      apellidoM, 
-      email, 
-      password, 
-      calle
-    })
+    startRegister(formValues);
+
+
+    setFormValues({
+      nombre: "",
+      apellidoP: "",
+      apellidoM: "",
+      email: "",
+      password: "",
+      calle: "",
+    });
     
   }
 
@@ -76,7 +79,7 @@ export const Register = () => {
                 id="nombre"
                 label="Nombre"
                 name="nombre"
-                value={nombre}
+                value={nombre || ""}
                 autoComplete="nombre"
                 onChange={handleInputChange}
               />
@@ -85,7 +88,7 @@ export const Register = () => {
               <TextField
                 autoComplete="apellidoP"
                 name="apellidoP"
-                value={apellidoP}
+                value={apellidoP || ""}
                 variant="outlined"
                 required
                 fullWidth
@@ -103,7 +106,7 @@ export const Register = () => {
                 id="apellidoM"
                 label="Apellido Materno"
                 name="apellidoM"
-                value={apellidoM}
+                value={apellidoM || ""}
                 autoComplete="apellidoM"
                 onChange={handleInputChange}
               />
@@ -118,7 +121,7 @@ export const Register = () => {
                 id="email"
                 label="Email Address"
                 name="email"
-                value={email}
+                value={email || ""}
                 autoComplete="email"
                 onChange={handleInputChange}
               />
@@ -129,7 +132,7 @@ export const Register = () => {
                 required
                 fullWidth
                 name="password"
-                value={password}
+                value={password || ""}
                 label="Password"
                 type="password"
                 id="password"
@@ -146,7 +149,7 @@ export const Register = () => {
                 id="calle"
                 label="Dirección"
                 name="calle"
-                value={calle}
+                value={calle || ""}
                 autoComplete="direcccion"
                 onChange={handleInputChange}
               />

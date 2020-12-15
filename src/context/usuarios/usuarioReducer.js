@@ -4,29 +4,38 @@ import { types } from "../../types/types";
 
 
 export const usuarioReducer = (state, action) => {
-
     switch (action.type) {
-        case types.obtenerUsuarios:
-            return {
-                ...state,
-                usuarios: action.payload
-                // ...action.payload
-            }
+
         case types.userCreate:
             return {
                 ...state,
                 ...action.payload,
                 usuarioCreado: true
             }
+        case types.doctorCreate:
+            return {
+                ...state,
+                ...action.payload,
+            }
         case types.usersLoaded:
             return {
                 ...state,
                 usuarios: [...action.payload]
             }
+        case types.doctorsLoaded:
+            return {
+                ...state,
+                doctors: [...action.payload]
+            }
         case types.usuarioSeleccionado:
             return {
                 ...state,
                 usuarioselect: action.payload
+            }
+        case types.doctorSeleccionado:
+            return {
+                ...state,
+                doctorSelect: action.payload
             }
         case types.userUpdated:
             return {
@@ -36,6 +45,14 @@ export const usuarioReducer = (state, action) => {
                 ),
                 usuarioselect: null
             }
+        case types.doctorUpdated:
+            return {
+                ...state,
+                doctors: state.doctors.map(
+                   doctor => (doctor.id === action.payload.id) ? action.payload : doctor
+                ),
+                doctorSelect: null
+            }
         case types.userDeleted:
             return {
                 ...state,
@@ -43,6 +60,25 @@ export const usuarioReducer = (state, action) => {
                     e => (e.id !== action.payload)
                 )
             }
+        case types.doctorDeleted:
+            return {
+                ...state,
+                doctors: state.doctors.filter(
+                     e => (e.id !== action.payload)
+                )
+            }
+        case types.userSelectClear: {
+            return {
+                ...state,
+                usuarioselect: null
+            }
+        }
+        case types.doctorSelectClear: {
+            return {
+                ...state,
+                doctorSelect: null
+            }
+        }
         default:
             return state;
     }

@@ -14,8 +14,11 @@ import Avatar from '@material-ui/core/Avatar';
 
 
 
-import { useForm } from '../../hooks/useForm';
-import { UsuarioContext } from '../../context/usuarios/UsuarioContext';
+
+import { UsuarioContext } from '../../../../context/usuarios/UsuarioContext';
+import { useForm } from '../../../../hooks/useForm';
+import { SpecialtyContext } from '../../../../context/especialidades/SpecialtyContext';
+
 
 
 
@@ -69,54 +72,73 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 
-export const CrearUsuario = ({history}) => {
+
+export const DoctorCreate = ({history}) => {
   const classes = useStyles();
 
-  const {crearUsuario, usuarioselect, userStartUpdate, limpiarUsuarioSelect} = useContext(UsuarioContext);
+  const {crearMedico, doctorSelect, doctorStartUpdate, limpiarDoctorSelect} = useContext(UsuarioContext);
+  const {specialtiesStartLoading,specialties} = useContext(SpecialtyContext);
+
+ 
 
 
   const [formValues, setFormValues, handleInputChange] = useForm({
-    nombre: "",
-    apellidoP: "",
-    apellidoM: "",
-    rut: "",
+    nombre: "Pedro",
+    apellidoP: "Pica",
+    apellidoM: "Piedra",
+    // rut: "",
     email: "",
-    password: "",
-    role: "",
-    telefono:"",
-    calle: "",
-    img: ""
+    password: "123",
+    telefono:"22334455",
+    calle: "Republica 334",
+    img: "",
+    especialidad: []
   });
 
   const {
     nombre,
     apellidoP,
     apellidoM,
-    rut,
     email,
     password,
-    role,
     telefono,
     calle,
-    img
+    img,
+    especialidad
   } = formValues;
   
 
   useEffect(() => {
-    if(usuarioselect) {
+    specialtiesStartLoading();
+    // eslint-disable-next-line
+    },[]);
+
+  useEffect(() => {
+    if(doctorSelect) {
       setFormValues({
-        ...usuarioselect,
-        calle: usuarioselect.domicilio[0].calle
+        ...doctorSelect,
+        calle: doctorSelect.domicilio[0].calle,
+        especialidad: doctorSelect.Specialties.map(specialty => specialty.id)
       });
     }
-  }, [usuarioselect, setFormValues]);
+  }, [doctorSelect, setFormValues]);
 
   
   const handleClearUser = () => {
-    history.push('/usuarios');
-    limpiarUsuarioSelect();
+    history.push('/medicos');
+    limpiarDoctorSelect();
   }
 
   
@@ -124,22 +146,21 @@ export const CrearUsuario = ({history}) => {
     e.preventDefault();
 
     //Evaluar si es edición o creación de usuarios
-    if(!usuarioselect) {
-      crearUsuario(formValues);
+    if(!doctorSelect) {
+      crearMedico(formValues);
     } else {
-      userStartUpdate(formValues);
+      doctorStartUpdate(formValues);
     }
 
     setFormValues({
       nombre: "",
       apellidoP: "",
       apellidoM: "",
-      rut: "",
       email: "",
       password: "",
-      role: "",
       telefono:"",
       calle: "",
+      especialidad: []
     });
   }
 
@@ -162,14 +183,19 @@ export const CrearUsuario = ({history}) => {
           <Typography component="h1" variant="h4" align="center">
             Ingresar datos de usuario
           </Typography>
-          <Grid item xs={12} className={classes.top} >
-          <Grid container justify="center">
-          <Avatar alt="Remy Sharp" src={img} className={classes.large} />
-          </Grid>
+          <Grid item xs={12} className={classes.top}>
+            <Grid container justify="center">
+              <Avatar alt="Remy Sharp" src={img} className={classes.large} />
+            </Grid>
           </Grid>
           <React.Fragment>
             <React.Fragment>
-              <form noValidate autoComplete="off" className={classes.stepper} onSubmit={handleCreateUser}>
+              <form
+                noValidate
+                autoComplete="off"
+                className={classes.stepper}
+                onSubmit={handleCreateUser}
+              >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
@@ -212,7 +238,7 @@ export const CrearUsuario = ({history}) => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <TextField
                       variant="outlined"
                       required
@@ -224,6 +250,26 @@ export const CrearUsuario = ({history}) => {
                       autoComplete="off"
                       onChange={handleInputChange}
                     />
+                  </Grid> */}
+
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      value={password || ""}
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="new-password"
+                      onChange={handleInputChange}
+                    />
+                    {doctorSelect && (
+                      <Typography variant="caption" gutterBottom>
+                        Ingrese un valor sólo si desea modificar la contraseña
+                      </Typography>
+                    )}
                   </Grid>
 
                   <Grid item xs={12}>
@@ -238,26 +284,6 @@ export const CrearUsuario = ({history}) => {
                       autoComplete="off"
                       onChange={handleInputChange}
                     />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      name="password"
-                      value={password || ""}
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                      onChange={handleInputChange}
-                    />
-                    {usuarioselect && 
-                    <Typography variant="caption" gutterBottom>
-                      Ingrese un valor sólo si desea modificar la contraseña
-                    </Typography>
-                    }
-                    
                   </Grid>
 
                   <Grid item xs={12}>
@@ -294,93 +320,93 @@ export const CrearUsuario = ({history}) => {
                   fullWidth
                   style={{ marginTop: 12 }}
                 >
-                  <InputLabel
+                    {/* <InputLabel
                     ref={inputLabel}
                     id="demo-simple-select-outlined-label"
                   >
-                    Rol
+                    Especialidad
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
-                    id="role"
-                    value={role}
-                    name="role"
+                    id="especialidad"
+                    value={especialidad || ""}
+                    name="especialidad"
                     onChange={handleInputChange}
                     labelWidth={labelWidth}
                   >
                     <MenuItem value="">
-                      <em>None</em>
+                      <em>Seleccionar</em>
                     </MenuItem>
-                    <MenuItem value="USER_ROLE">Usuario</MenuItem>
-                    <MenuItem value="DOCTOR_ROLE">Doctor</MenuItem>
-                    <MenuItem value="ADMIN_ROLE">Administrador</MenuItem>
+                    {
+                    
+                    specialties.map((specialty) => (
+                      <MenuItem
+                        key={specialty.id}
+                        value={specialty.name}
+                        // style={getStyles(name, personName, theme)}
+                      >
+                        {specialty.name}
+                      </MenuItem>
+                    ))}
+                  </Select> */}
+
+                  <InputLabel 
+                    ref={inputLabel}
+                    id="demo-mutiple-name-label">
+                        Especialidad
+                    </InputLabel>
+                  <Select
+                    labelId="demo-mutiple-name-label"
+                    id="especialidad"
+                    multiple
+                    name="especialidad"
+                    value={especialidad || []}
+                    onChange={handleInputChange}
+                    labelWidth={labelWidth}
+                    // input={<Input />}
+                    // MenuProps={MenuProps}
+                  >
+                    {
+                    
+                    specialties.map((specialty) => (
+                      <MenuItem
+                        key={specialty.id}
+                        value={specialty.id}
+                        // style={getStyles(name, personName, theme)}
+                      >
+                        {specialty.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
 
                 <React.Fragment>
-              <div className={classes.buttons}>
-                <Button
-                  variant="contained"
-                  color="default"
-                  // component={Link}
-                  // to="/usuarios"
-                  onClick={handleClearUser}
-                  className={classes.button}
-                >
-                  Volver
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                >
-                  {usuarioselect ? 'Editar' : 'Guardar'}
-                </Button>
-              </div>
-            </React.Fragment>
+                  <div className={classes.buttons}>
+                    <Button
+                      variant="contained"
+                      color="default"
+                      // component={Link}
+                      // to="/usuarios"
+                      onClick={handleClearUser}
+                      className={classes.button}
+                    >
+                      Volver
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      {doctorSelect ? "Editar" : "Guardar"}
+                    </Button>
+                  </div>
+                </React.Fragment>
               </form>
             </React.Fragment>
           </React.Fragment>
         </Paper>
         {/* <Copyright /> */}
-        {/* {usuarioselect &&
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Actualizar Imagen
-          </Typography>
-
-          <React.Fragment>
-            <React.Fragment>
-              <form noValidate autoComplete="off" className={classes.stepper} onSubmit={handleCreateUser}>
-                
-                  
-
-            <input 
-              type="file"  
-              id="img"
-              value={img || ""}
-              name="img"
-              onChange={handleInputChange}
-              />
-
-                <React.Fragment>
-              <div className={classes.buttons}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Editar imagen
-                </Button>
-              </div>
-            </React.Fragment>
-              </form>
-            </React.Fragment>
-          </React.Fragment>
-        </Paper>
-        } */}
       </main>
     </React.Fragment>
   );

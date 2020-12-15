@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   Grid,
-  LinearProgress,
+  // LinearProgress,
   Select,
   OutlinedInput,
   MenuItem,
@@ -11,13 +11,13 @@ import { useTheme } from "@material-ui/styles";
 import {
   ResponsiveContainer,
   ComposedChart,
-  AreaChart,
-  LineChart,
+  // AreaChart,
+  // LineChart,
   Line,
   Area,
-  PieChart,
-  Pie,
-  Cell,
+  // PieChart,
+  // Pie,
+  // Cell,
   YAxis,
   XAxis,
 } from "recharts";
@@ -35,12 +35,12 @@ import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
 
 const mainChartData = getMainChartData();
-const PieChartData = [
-  { name: "Group A", value: 400, color: "primary" },
-  { name: "Group B", value: 300, color: "secondary" },
-  { name: "Group C", value: 300, color: "warning" },
-  { name: "Group D", value: 200, color: "success" },
-];
+// const PieChartData = [
+//   { name: "Group A", value: 400, color: "primary" },
+//   { name: "Group B", value: 300, color: "secondary" },
+//   { name: "Group C", value: 300, color: "warning" },
+//   { name: "Group D", value: 200, color: "success" },
+// ];
 
 export default function Dashboard(props) {
   var classes = useStyles();
@@ -56,11 +56,11 @@ export default function Dashboard(props) {
       size="medium"
       color="secondary"
     >
-        Latest Reports
+        Ultimos Reportes
     </Button>} />
       <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
-          <Widget
+          {/* <Widget
             title="Visits Today"
             upperTitle
             bodyClass={classes.fullHeightBody}
@@ -121,10 +121,10 @@ export default function Dashboard(props) {
                 <Typography size="md">3.25%</Typography>
               </Grid>
             </Grid>
-          </Widget>
+          </Widget> */}
         </Grid>
         <Grid item lg={3} md={8} sm={6} xs={12}>
-          <Widget
+          {/* <Widget
             title="App Performance"
             upperTitle
             className={classes.card}
@@ -184,10 +184,10 @@ export default function Dashboard(props) {
                 className={classes.progress}
               />
             </div>
-          </Widget>
+          </Widget> */}
         </Grid>
         <Grid item lg={3} md={8} sm={6} xs={12}>
-          <Widget
+          {/* <Widget
             title="Server Overview"
             upperTitle
             className={classes.card}
@@ -265,10 +265,10 @@ export default function Dashboard(props) {
                 </ResponsiveContainer>
               </div>
             </div>
-          </Widget>
+          </Widget> */}
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
-          <Widget title="Revenue Breakdown" upperTitle className={classes.card}>
+          {/* <Widget title="Revenue Breakdown" upperTitle className={classes.card}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <ResponsiveContainer width="100%" height={144}>
@@ -305,7 +305,7 @@ export default function Dashboard(props) {
                 </div>
               </Grid>
             </Grid>
-          </Widget>
+          </Widget> */}
         </Grid>
         <Grid item xs={12}>
           <Widget

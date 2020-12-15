@@ -15,11 +15,11 @@ import { UsuarioContext } from '../../context/usuarios/UsuarioContext';
 import TablePagination from '@material-ui/core/TablePagination';
 import {useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
 
 
 
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) =>({
   table: {
     minWidth: 650,
   },
@@ -32,48 +32,55 @@ const useStyles = makeStyles({
   },
   colorUpdate: {
     color: '#F39C12'
+},
+root: {
+  display: 'flex',
+  flexWrap: 'wrap',
+  '& > *': {
+    margin: theme.spacing(0.5),
+  },
 }
-});
+}));
 
 
-export const TableUser = () => {
+export const TableDoctor = () => {
 
   const classes = useStyles();
 
 
-  const {usersStartLoading, usuarios, userStartDelete, guardarUsuarioActual, userStartUploading} = useContext(UsuarioContext);
+  const {doctorsLoading, doctors, doctorStartDelete, guardarDoctorSeleccionado, doctorStartUploading} = useContext(UsuarioContext);
 
-
+   
   const history = useHistory();
 
 
  useEffect(() => {
-  usersStartLoading();
+    doctorsLoading();
   // eslint-disable-next-line
   },[]);
 
 
   const onSelectUser = (e) => {
-    guardarUsuarioActual(e);
-    history.push('/create-user')
+    guardarDoctorSeleccionado(e);
+    history.push('/create-doctor')
   }
 
  const handleDelete = (id) => {
-   userStartDelete(id);
-   usersStartLoading();
+  doctorStartDelete(id);
+   doctorsLoading();
  }
 
 
  const handlePictureClick = (e) => {
    document.querySelector('#fileSelector').click();
-    guardarUsuarioActual(e);
+   guardarDoctorSeleccionado(e);
     // uiOpenModal();
  }
 
  const handleFileChange = (e) => {
    const file = e.target.files[0];
    if (file) {
-     userStartUploading(file);
+    doctorStartUploading(file);
    }
  };
 
@@ -95,7 +102,7 @@ export const TableUser = () => {
   return (
     <TableContainer component={Paper}>
         {
-            usuarios.length === 0 
+            doctors.length === 0 
             ?(<Alert severity="warning">
                 <AlertTitle>Información</AlertTitle>
                 No hay usuarios regitrados en este momento — <strong>check it out!</strong>
@@ -107,13 +114,13 @@ export const TableUser = () => {
                 <TableCell>Imagen</TableCell>
                 <TableCell align="left">Nombre</TableCell>
                 <TableCell align="left">Apellido</TableCell>
-                <TableCell align="left">Dirección</TableCell>
+                <TableCell align="left">Especialidad</TableCell>
                 <TableCell align="left">Correo electronico</TableCell>
                 <TableCell align="center">Opciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {usuarios
+              {doctors
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((usuario) => (
                 <TableRow key={usuario.id}>
@@ -134,7 +141,15 @@ export const TableUser = () => {
                   </TableCell>
                   <TableCell align="left">{usuario.nombre}</TableCell>
                   <TableCell align="left">{usuario.apellidoP}</TableCell>
-                  <TableCell align="left">{usuario.domicilio[0].calle}</TableCell>
+                  <TableCell align="left">{usuario.Specialties.map(specialty => 
+                  <div className={classes.root} key={specialty.id} >
+                  <Chip 
+                    label={specialty.name} 
+                    color="default"
+                    />
+                    </div>
+                  )}
+                  </TableCell>
                   <TableCell align="left">{usuario.email}</TableCell>
                   <TableCell align="center">
     
@@ -164,7 +179,7 @@ export const TableUser = () => {
         <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={usuarios.length}
+            count={doctors.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

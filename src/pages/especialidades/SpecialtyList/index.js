@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '@material-ui/core/Button';
 import PageTitle from '../../../components/PageTitle/PageTitle';
 import { SpecialtyTable } from '../../../components/tables/SpecialtyTable';
+import { ModalContext } from '../../../context/modal/ModalContext';
 
 
 
-export const SpecialtyList = ({history}) => {
+export const SpecialtyList = () => {
+
+  const {uiOpenModal} = useContext(ModalContext);
+
+  const openModal = () => {
+    uiOpenModal();
+  }
+
     return (
         <div>
       <PageTitle title="Mantenedor de especialidades" 
@@ -13,7 +21,7 @@ export const SpecialtyList = ({history}) => {
       <Button
       // component={Link}
       // to="/create-user"
-      onClick={() => history.push('/create-user')}
+      onClick={openModal}
       variant="contained"
       size="medium"
       color="primary"

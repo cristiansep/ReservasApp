@@ -32,10 +32,11 @@ export const Login = () => {
 
   const {iniciarSesion} = useContext(AuthContext);
 
-
+  
 
   const initialForm = {
-    email: 'crist@gmail.com',
+    // email: 'crist@gmail.com',
+    email: 'juan@gmail6.com',
     password: '123'
   };
 

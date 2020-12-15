@@ -12,8 +12,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import TablePagination from '@material-ui/core/TablePagination';
-import {useHistory } from 'react-router-dom'
 import { SpecialtyContext } from '../../context/especialidades/SpecialtyContext';
+import { ModalContext } from '../../context/modal/ModalContext';
+import { ImageModal } from '../ImageModal';
 
 
 
@@ -41,7 +42,8 @@ export const SpecialtyTable = () => {
 
   const {specialtiesStartLoading, specialties, guardarEspecialidadActual, specialtyStartDelete} = useContext(SpecialtyContext);
 
-  const history = useHistory();
+  const {uiOpenModal} = useContext(ModalContext);
+
 
 
  useEffect(() => {
@@ -52,8 +54,7 @@ export const SpecialtyTable = () => {
 
   const onSelectSpecialty = (e) => {
     guardarEspecialidadActual(e);
-    console.log(e)
-    // history.push('/create-user')
+    uiOpenModal();
   }
 
  const handleDelete = (id) => {
@@ -82,7 +83,7 @@ export const SpecialtyTable = () => {
             specialties.length === 0 
             ?(<Alert severity="warning">
                 <AlertTitle>Información</AlertTitle>
-                No hay usuarios regitrados en este momento — <strong>check it out!</strong>
+                No hay especialidades regitradas en este momento — <strong>check it out!</strong>
               </Alert>
              )
             :  <Table className={classes.table} aria-label="simple table">
@@ -135,6 +136,7 @@ export const SpecialtyTable = () => {
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
+          <ImageModal/>
     </TableContainer>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Route,
   Switch,
@@ -21,12 +21,15 @@ import Sidebar from "../Sidebar/Sidebar";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
-import { Doctor } from "../../pages/doctor/Doctor";
 import { Reservas } from "../../pages/reservas/Reservas";
 import { UserList } from "../../pages/ususarios/UserList";
 import { CrearUsuario } from "../../pages/ususarios/CrearUsuario";
 import { SpecialtyList } from "../../pages/especialidades/SpecialtyList";
-
+import  Dashboard  from "../../pages/dashboard/Dashboard";
+import { DoctorList } from "../../pages/ususarios/doctors/DoctorList";
+import { DoctorSchedule } from "../../pages/ususarios/doctors/DoctorSchedule";
+import { DoctorCreate } from "../../pages/ususarios/doctors/DoctorCreate";
+import { AuthContext } from "../../context/auth/AuthContext";
 
 function Layout(props) {
   var classes = useStyles();
@@ -34,6 +37,8 @@ function Layout(props) {
   // global
   var layoutState = useLayoutState();
 
+  const {user:{rol}} = useContext(AuthContext);
+  console.log(rol)
   return (
     <div className={classes.root}>
         <>
@@ -45,12 +50,42 @@ function Layout(props) {
             })}
           >
             <div className={classes.fakeToolbar} />
-            <Switch>
-              <Route path="/dashboard" component={Doctor} />
-              <Route path="/reservas" component={Reservas} />
-              <Route path="/usuarios" component={UserList} />
-              <Route path="/create-user" component={CrearUsuario} />
-              <Route path="/especialidades" component={SpecialtyList} />
+            {/* <Switch> */}
+            {rol === "ADMIN_ROLE" &&
+              <Switch>
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/reservas" component={Reservas} />
+                <Route path="/usuarios" component={UserList} />
+                <Route path="/medicos" component={DoctorList} />
+                <Route path="/create-user" component={CrearUsuario} />
+                <Route path="/especialidades" component={SpecialtyList} />
+                <Route path="/create-doctor" component={DoctorCreate}/>
+                <Redirect to="/dashboard"/> 
+              </Switch>
+            }
+
+            {rol === "DOCTOR_ROLE" && 
+              <Switch>
+                  <Route path="/dashboard" component={Dashboard} />
+                  <Route path="/reservas" component={Reservas} />
+                  <Route path="/horario" component={DoctorSchedule}/>
+                  <Redirect to="/dashboard"/> 
+              </Switch>
+            
+            }
+
+
+            {rol === "USER_ROLE" && 
+              <Switch>
+                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/reservas" component={Reservas} />
+                <Redirect to="/dashboard"/> 
+              </Switch>
+            
+            }
+             
+             
+              
               {/* <Route path="/app/typography" component={Typography} />
               <Route path="/app/tables" component={Tables} />
               <Route path="/app/notifications" component={Notifications} />
@@ -62,8 +97,8 @@ function Layout(props) {
               {/* <Route path="/app/ui/maps" component={Maps} />
               <Route path="/app/ui/icons" component={Icons} />
               <Route path="/app/ui/charts" component={Charts} /> */}
-              <Redirect to="/dashboard"/>
-            </Switch>
+              {/* <Redirect to="/dashboard"/> */}
+            {/* </Switch> */}
           </div>
         </>
     </div>
