@@ -1,3 +1,3 @@
-# React Material Reservas
+#Sistema de reserva de horas médicas
 
 
