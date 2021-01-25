@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import { CalendarModal } from '../CalendarModal';
@@ -54,6 +54,7 @@ const now = moment();
 export const ScheduleTable = () => {
 
   const classes = useStyles();
+
   
   const {
       scheduleSetActive, 
@@ -80,7 +81,6 @@ export const ScheduleTable = () => {
 
 
   const onSelectEvent = (e) => {
-    console.log(e)
     scheduleSetActive(e);
   }
 
@@ -91,6 +91,9 @@ export const ScheduleTable = () => {
 
   const onSelectSlot = (e) => {
     // const {start, end,slots} = e;
+    const day = e.start
+    const fecha = e.start
+    console.log(moment(fecha).format('YYYY-MM-DD'));
     if(e.action === 'click' || e.action === 'doubleClick') {
       scheduleClearActive();
       scheduleClearShift();
@@ -100,7 +103,7 @@ export const ScheduleTable = () => {
       return Swal.fire('Error', 'La fecha seleccionada debe ser mayor a la fecha actual', 'error');
     }
     // scheduleSelectedShift({start, end,slots});
-    scheduleSelectedShift(e);
+    scheduleSelectedShift(e,moment(day).day(),moment(fecha).format('YYYY-MM-DD'));
     openCalendarModal(e);
   }
 
@@ -142,7 +145,7 @@ const eventStyleGetter = (title,start,end,isSelected) => {
       />
     <CalendarModal/>
     {
-      (turnoActivo) && <DeleteEventFab/>
+      (turnoActivo) && <DeleteEventFab/> 
     }
     
     </div>

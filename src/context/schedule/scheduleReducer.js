@@ -52,12 +52,17 @@ export const scheduleReducer = (state, action) => {
                 ...state,
                 selectedShift: action.payload
             }
-            case types.scheduleClearShift: {
-                return {
-                   ...state,
-                   selectedShift: null
-                }
-            } 
+        case types.scheduleShiftDay:
+            return {
+                ...state,
+                turnoDoctorDay: action.payload
+            }
+        case types.scheduleClearShift: {
+            return {
+                ...state,
+                selectedShift: null
+            }
+        } 
         default:
             return state;
     }

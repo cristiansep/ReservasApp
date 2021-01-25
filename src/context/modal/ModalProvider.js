@@ -9,7 +9,8 @@ export const ModalProvider = props => {
 
     const initialState = {
       modalOpen: false,
-      modalCalendarOpen: false
+      modalCalendarOpen: false,
+      modalAppointmentOpen: false
     }
 
     const [state, dispatch] = useReducer(modalReducer, initialState);
@@ -40,6 +41,19 @@ export const ModalProvider = props => {
     };
 
 
+    const openAppointmentModal = () => {
+        dispatch({
+            type: types.openAppointmentModal
+        })
+    };
+
+    const closeAppoitmentModal = () => {
+        dispatch({
+            type: types.closeAppointmentModal
+        })
+    };
+
+
 
 
     return (
@@ -47,12 +61,15 @@ export const ModalProvider = props => {
             value={{
                 state, 
                 dispatch,
-                modalOpen: state.modalOpen,
-                modalCalendarOpen: state.modalCalendarOpen,
+                modalOpen:state.modalOpen,
+                modalCalendarOpen:state.modalCalendarOpen,
+                modalAppointmentOpen:state.modalAppointmentOpen,
                 uiOpenModal,
                 uiCloseModal,
                 openCalendarModal,
-                closeCalendarModal 
+                closeCalendarModal,
+                openAppointmentModal,
+                closeAppoitmentModal
             }}>
             {props.children}
         </ModalContext.Provider>

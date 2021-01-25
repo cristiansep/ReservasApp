@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme} from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { ScheduleContext } from '../../context/schedule/ScheduleContext';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const DeleteEventFab = () => {
+
   const classes = useStyles();
 
   const {scheduleDelete, scheduleClearActive} = useContext(ScheduleContext);

@@ -6,6 +6,8 @@ import { fetchConToken } from "../../helpers/fetch";
 import Swal from "sweetalert2";
 import { prepareDates } from "../../helpers/prepareDates";
 import { AuthContext } from "../auth/AuthContext";
+import { prepareShift } from "../../helpers/prepareShift";
+
 
 export const ScheduleProvider = props => {
 
@@ -13,51 +15,72 @@ export const ScheduleProvider = props => {
     const initialState = {
        turnos:[],
       turnoActivo: null,
-      selectedShift: null
+      selectedShift: null,
+      turnoDoctorDay: null
     }
 
     const [state, dispatch] = useReducer(scheduleReducer, initialState);
     const {user: {uid, name}} = useContext(AuthContext);
 
+
     const schedulesLoading = async () => {
+      try {
+        const resp = await fetchConToken("schedule");
+        const body = await resp.json();
 
-        try {
+        const schedules = prepareDates(body.turnos);
 
-         
-            const resp = await fetchConToken('schedule');
-            const body = await resp.json();
+        dispatch({
+          type: types.schedulesLoaded,
+          payload: schedules,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-            
-            const schedules = prepareDates(body.turnos);
+    const scheduleShiftDoctor = async (idDoctor, day) => {
 
-            dispatch({
-                type: types.schedulesLoaded,
-                payload: schedules
-            });
+   
+      try {
+        const resp = await fetchConToken(`schedule/${idDoctor}/${day}`);
+        const body = await resp.json();
+        
+        const shift = prepareShift(body.turno);
 
-                 
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
+        dispatch({
+          type: types.scheduleShiftDay,
+          payload: shift,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
  
     const scheduleStartAddNew = async (schedule) => {
       
-      const resp = await fetchConToken("schedule/new", schedule, "POST");
+      const {start, end, slots} = schedule.shift;
+      const {title,day, fecha} = schedule;
+
+
+      const resp = await fetchConToken("schedule/new", {title, day,fecha ,start, end, slots}, "POST");
       const body = await resp.json();
 
       try {
         if (body.ok) {
-          schedule.id = body.horarioGuardado.id;
-          schedule.User = {
+          schedule.shift.id = body.horarioGuardado.id;
+          schedule.shift.slots = body.horarioGuardado.slots;
+          schedule.day = body.horarioGuardado.day;
+          schedule.fecha = body.horarioGuardado.fecha;
+          schedule.shift.User = {
             id: uid,
             name: name,
           };
           dispatch({
             type: types.scheduleAddNew,
-            payload: schedule,
+            payload: schedule.shift,
           });
+          // console.log(schedule.day)
           Swal.fire("Success", body.msg, "success");
         } else {
           console.log(body.msg);
@@ -106,10 +129,10 @@ export const ScheduleProvider = props => {
           });
     }
 
-    const scheduleSelectedShift = (shift) => {
+    const scheduleSelectedShift = (shift, day, fecha) => {
       dispatch({
         type: types.scheduleSelectedShift,
-        payload: shift,
+        payload: {shift, day, fecha}
       });
     }
 
@@ -150,6 +173,7 @@ export const ScheduleProvider = props => {
                 turnos:state.turnos,
                 turnoActivo: state.turnoActivo,
                 selectedShift: state.selectedShift,
+                turnoDoctorDay: state.turnoDoctorDay,
                 scheduleStartAddNew,
                 scheduleSetActive,
                 scheduleClearActive,
@@ -157,7 +181,8 @@ export const ScheduleProvider = props => {
                 scheduleSelectedShift,
                 scheduleClearShift,
                 scheduleUpdate,
-                scheduleDelete
+                scheduleDelete,
+                scheduleShiftDoctor 
             }}>
             {props.children}
         </ScheduleContext.Provider>

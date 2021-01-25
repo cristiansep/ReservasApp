@@ -25,7 +25,17 @@ export const modalReducer = (state, action) => {
             return {
                 ...state,
                 modalCalendarOpen: false,
-            }       
+            }  
+        case types.openAppointmentModal:
+             return {
+                ...state,
+                modalAppointmentOpen: true
+            }
+        case types.closeAppointmentModal:
+            return {
+                ...state,
+                modalAppointmentOpen: false,
+            } 
         default:
             return state;
     }

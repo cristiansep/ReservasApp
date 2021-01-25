@@ -15,6 +15,7 @@ export const SpecialtyProvider = props => {
 
     const initialState = {
         specialties: [],
+        specialtyDocs: [],
         specialtySelect: null
     }
 
@@ -46,13 +47,37 @@ export const SpecialtyProvider = props => {
     });
 
 
+    const specialtiesDoctorLoading = async (specialty) => {
+
+
+      try {
+       
+          const resp = await fetchConToken(`doctor/${specialty.value}/specialties`, specialty, );
+          const body = await resp.json();
+
+          const specialtiesDoctor = body.specialtyDoctor;
+          
+            dispatch({
+              type: types.specialtyDoctor,
+              payload: specialtiesDoctor,
+            });
+               
+      } catch (error) {
+          console.log(error);
+      }
+
+  }
+
+
     const specialtyCreated = async (datos) => {
 
       const resp = await fetchConToken("specialty/new", datos, "POST");
       const body = await resp.json();
 
+
       try {
         if (body.ok) {
+          datos.id = body.especialidadDB.id
           dispatch({
             type: types.specialtyCreate,
             payload: datos,
@@ -138,13 +163,15 @@ export const SpecialtyProvider = props => {
                 state, 
                 dispatch,
                 specialties:state.specialties,
+                specialtyDocs:state.specialtyDocs,
                 specialtySelect: state.specialtySelect,
                 specialtiesStartLoading,
                 specialtyCreated,
                 guardarEspecialidadActual,
                 specialtyStartUpdate,
                 specialtyStartDelete,
-                ClearSpecialtySelect
+                ClearSpecialtySelect,
+                specialtiesDoctorLoading
             }}>
             {props.children}
         </SpecialtyContext.Provider>

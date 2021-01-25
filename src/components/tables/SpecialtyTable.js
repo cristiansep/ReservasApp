@@ -15,10 +15,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import { SpecialtyContext } from '../../context/especialidades/SpecialtyContext';
 import { ModalContext } from '../../context/modal/ModalContext';
 import { ImageModal } from '../ImageModal';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
@@ -31,8 +33,14 @@ const useStyles = makeStyles({
   },
   colorUpdate: {
     color: '#F39C12'
-}
-});
+},
+buttons: {
+  display: 'flex',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+},
+}));
 
 
 export const SpecialtyTable = () => {
@@ -103,7 +111,9 @@ export const SpecialtyTable = () => {
                   </TableCell> */}
                   <TableCell align="center">{specialty.name}</TableCell>
                   <TableCell align="center">
-    
+                  <Grid container justify="center" alignItems="center">
+                  <div className={classes.buttons}>
+                  <Tooltip arrow  TransitionComponent={Zoom} title="Editar">
                   <IconButton 
                     color="default" 
                     aria-label="edit" 
@@ -112,7 +122,9 @@ export const SpecialtyTable = () => {
                     >
                         <EditIcon />
                     </IconButton>
-    
+                    </Tooltip>
+
+                    <Tooltip arrow  TransitionComponent={Zoom} title="Eliminar">
                     <IconButton 
                       color="secondary" 
                       aria-label="delete" 
@@ -120,7 +132,10 @@ export const SpecialtyTable = () => {
                       onClick={() => handleDelete(specialty.id)}
                       >
                         <DeleteIcon />
-                    </IconButton>       
+                    </IconButton>   
+                    </Tooltip>
+                    </div>
+                    </Grid>     
                   </TableCell>
                 </TableRow>
               ))}

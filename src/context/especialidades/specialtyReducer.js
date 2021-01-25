@@ -19,6 +19,11 @@ export const specialtyReducer = (state, action) => {
                 ...state,
                 specialties: [...action.payload]
             }
+        case types.specialtyDoctor:
+            return {
+                ...state,
+                specialtyDocs: [...action.payload]
+            }
         case types.especialidadSeleccionada:
             return {
                 ...state,

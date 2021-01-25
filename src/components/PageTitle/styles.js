@@ -10,6 +10,9 @@ export default makeStyles(theme => ({
   typo: {
     color: theme.palette.text.hint,
   },
+  typo2: {
+    color: theme.palette.warning.light,
+  },
   button: {
     boxShadow: theme.customShadows.widget,
     textTransform: "none",

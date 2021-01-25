@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+
 import {
   AppBar,
   Toolbar,
@@ -95,6 +96,7 @@ export default function Header(props) {
         </IconButton>
 
         
+        <img src="/logos/blanco.png" alt="logo" className={classes.logo}/>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
           ReservoSalud
         </Typography>

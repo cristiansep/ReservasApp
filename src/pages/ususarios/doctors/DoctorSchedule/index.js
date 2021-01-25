@@ -17,16 +17,21 @@ export const DoctorSchedule = () => {
 
     return (
         <div>
-      <PageTitle title="Mantenedor de Horarios" 
-      button={
-      <Button
-      variant="contained"
-      size="medium"
-      color="primary"
-      onClick={handleClickNew}
-    >
-        Nuevo Horario
-    </Button>} />
+      <PageTitle 
+        title="Mantenedor de Horarios" 
+        subTitle="Para crear su horario, debe seleccionar sus horas de trabajo usando el mouse"
+
+    //   button={
+    //   <Button
+    //   variant="contained"
+    //   size="medium"
+    //   color="primary"
+    //   onClick={handleClickNew} 
+    // >
+    //     Nuevo Horario
+    // </Button>} 
+    />
+
           <ScheduleTable/>
         </div>
     )

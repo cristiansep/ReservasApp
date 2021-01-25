@@ -9,6 +9,7 @@ import { UsuarioProvider } from './context/usuarios/UsuarioProvider';
 import { SpecialtyProvider } from './context/especialidades/SpecialtyProvider';
 import { ModalProvider } from './context/modal/ModalProvider';
 import { ScheduleProvider } from './context/schedule/ScheduleProvider';
+import { AppointmentProvider } from './context/appointments/AppointmentProvider';
 
 
 
@@ -22,12 +23,14 @@ export const ReservasApp = () => {
         <SpecialtyProvider>
           <LayoutProvider>
             <ScheduleProvider>
+            <AppointmentProvider>
             <ModalProvider>
               <ThemeProvider theme={Themes.default}>
                 <CssBaseline />
                 <AppRouter />
               </ThemeProvider>
             </ModalProvider>
+            </AppointmentProvider>
             </ScheduleProvider>
           </LayoutProvider>
         </SpecialtyProvider>

@@ -58,8 +58,7 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(94),
   }
 }));
-
-const dia = moment().format('dddd');                   
+               
 const now = moment().minutes(0).seconds(0).add(1,'hours');
 const nowPlus = now.clone().add(1, 'hours');
 
@@ -76,7 +75,7 @@ export const CalendarModal = () => {
 
   const {modalCalendarOpen, closeCalendarModal} = useContext(ModalContext);
   
-  const {turnoActivo, scheduleStartAddNew: scheduleStartAddNew, scheduleClearActive ,selectedShift, scheduleClearShift, scheduleUpdate } = useContext(ScheduleContext);
+  const {turnoActivo, scheduleStartAddNew, scheduleClearActive ,selectedShift, scheduleClearShift, scheduleUpdate } = useContext(ScheduleContext);
   
 
   const [dateStart, setDateStart] = useState(now.toDate());

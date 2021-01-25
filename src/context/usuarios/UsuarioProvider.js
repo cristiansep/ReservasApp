@@ -82,7 +82,6 @@ export const UsuarioProvider = props => {
 
     try {
 
-      console.log(datos)
         // const resp = await fetchConToken('doctor');
         // const body = await resp.json();
 

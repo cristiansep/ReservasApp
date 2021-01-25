@@ -10,8 +10,10 @@ export const types = {
     //modal
     openModal: '[modal] Open modal',
     closeModal: '[modal] Close modal',
-    openCalendarModal: '[calendarModal] Open Calendar Modal',
-    closeCalendarModal: '[calendarModal] Close Calendar Modal',
+    openCalendarModal: '[calendarModal] Open calendar Modal',
+    closeCalendarModal: '[calendarModal] Close calendar Modal',
+    openAppointmentModal: '[appointmetModal] Open appointment modal',
+    closeAppointmentModal: '[appointmetModal] Close appointment modal',
 
     //auth
     authCheckingFinish: '[auth] Finish checking login state',
@@ -40,6 +42,7 @@ export const types = {
     
     // Especialidades
     specialtiesLoaded: '[specialties] Especialties loaded',
+    specialtyDoctor: '[specialties] Especialty doctors',
     especialidadSeleccionada: '[specialties] Especialidad seleccionada',
     specialtyDeleted: '[specialties] Specialty delete',
     specialtyCreate: '[specialties] Specialty create',
@@ -54,5 +57,20 @@ export const types = {
     scheduleClearActive: '[schedule] Schedule clear',
     schedulesLoaded: '[schedule] Schedule loaded',
     scheduleSelectedShift: '[schedule] Shift Selected',
-    scheduleClearShift: '[schedule] Shift clear'
+    scheduleClearShift: '[schedule] Shift clear',
+    scheduleShiftDay: '[schedule] Shift day',
+    
+
+    // Reservas
+    appointmentAddNew: '[appointment] Appointment add new',
+    appointmentSetActive: '[appointment] Appointment set active',
+    appointmentCleanActive: '[appointment] Appointment clear',
+    appointmentUpdated: '[appointment] Appointment updated',
+    appointmentDeleted: '[appointment] Appointment deleted',
+    appointmentsLoaded: '[appointment] Appointment loaded',
+    appointmentsLoadedPatient: '[appointment] Appointment patient loaded',
+    appointmentsLoadedConfirmed: '[appointment] Appointment loaded confirmed',
+    appointmentUserStatusUpdated: '[appointment] Appointment user status update',
+    appointmentStatusConfirmUpdated: '[appointment] Appointment status confirm update',
+    appointmentStatusUpdated: '[appointment] Appointment status update',
 }

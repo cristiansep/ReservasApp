@@ -15,11 +15,12 @@ import { UsuarioContext } from '../../context/usuarios/UsuarioContext';
 import TablePagination from '@material-ui/core/TablePagination';
 import {useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 
-
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
@@ -32,8 +33,14 @@ const useStyles = makeStyles({
   },
   colorUpdate: {
     color: '#F39C12'
-}
-});
+},
+buttons: {
+  display: 'flex',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+},
+}));
 
 
 export const TableUser = () => {
@@ -137,7 +144,9 @@ export const TableUser = () => {
                   <TableCell align="left">{usuario.domicilio[0].calle}</TableCell>
                   <TableCell align="left">{usuario.email}</TableCell>
                   <TableCell align="center">
-    
+                  <Grid container justify="center" alignItems="center">
+                  <div className={classes.buttons}>
+                  <Tooltip arrow  TransitionComponent={Zoom} title="Editar">
                   <IconButton 
                     color="default" 
                     aria-label="delete" 
@@ -146,7 +155,9 @@ export const TableUser = () => {
                     >
                         <EditIcon />
                     </IconButton>
+                    </Tooltip>
     
+                    <Tooltip arrow  TransitionComponent={Zoom} title="Eliminar">
                     <IconButton 
                       color="secondary" 
                       aria-label="delete" 
@@ -154,7 +165,10 @@ export const TableUser = () => {
                       onClick={() => handleDelete(usuario.id)}
                       >
                         <DeleteIcon />
-                    </IconButton>       
+                    </IconButton> 
+                    </Tooltip>
+                    </div>
+                    </Grid>      
                   </TableCell>
                 </TableRow>
               ))}

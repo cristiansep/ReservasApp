@@ -30,6 +30,8 @@ import { DoctorList } from "../../pages/ususarios/doctors/DoctorList";
 import { DoctorSchedule } from "../../pages/ususarios/doctors/DoctorSchedule";
 import { DoctorCreate } from "../../pages/ususarios/doctors/DoctorCreate";
 import { AuthContext } from "../../context/auth/AuthContext";
+import { AppointmetList } from "../../pages/reservas/AppointmentList";
+import { AppointmentCreate } from "../../pages/reservas/AppointmentCreate";
 
 function Layout(props) {
   var classes = useStyles();
@@ -38,7 +40,7 @@ function Layout(props) {
   var layoutState = useLayoutState();
 
   const {user:{rol}} = useContext(AuthContext);
-  console.log(rol)
+
   return (
     <div className={classes.root}>
         <>
@@ -49,12 +51,14 @@ function Layout(props) {
               [classes.contentShift]: layoutState.isSidebarOpened,
             })}
           >
+          
             <div className={classes.fakeToolbar} />
             {/* <Switch> */}
             {rol === "ADMIN_ROLE" &&
               <Switch>
                 <Route path="/dashboard" component={Dashboard} />
-                <Route path="/reservas" component={Reservas} />
+                <Route path="/reservas" component={AppointmetList} />
+                <Route path="/create-appointment" component={AppointmentCreate} />
                 <Route path="/usuarios" component={UserList} />
                 <Route path="/medicos" component={DoctorList} />
                 <Route path="/create-user" component={CrearUsuario} />
@@ -67,7 +71,8 @@ function Layout(props) {
             {rol === "DOCTOR_ROLE" && 
               <Switch>
                   <Route path="/dashboard" component={Dashboard} />
-                  <Route path="/reservas" component={Reservas} />
+                  <Route path="/reservas" component={AppointmetList} />
+                  <Route path="/create-appointment" component={AppointmentCreate} />
                   <Route path="/horario" component={DoctorSchedule}/>
                   <Redirect to="/dashboard"/> 
               </Switch>
@@ -78,7 +83,8 @@ function Layout(props) {
             {rol === "USER_ROLE" && 
               <Switch>
                  <Route path="/dashboard" component={Dashboard} />
-                <Route path="/reservas" component={Reservas} />
+                 <Route path="/reservas" component={AppointmetList} />
+                  <Route path="/create-appointment" component={AppointmentCreate} />
                 <Redirect to="/dashboard"/> 
               </Switch>
             

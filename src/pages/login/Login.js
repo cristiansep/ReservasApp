@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-
+import { useForm as validationForm } from "react-hook-form";
 
 // styles
 import useStyles from "./styles";
@@ -29,14 +29,19 @@ import { Copyright } from '../../components/Copyright/Copyright';
 export const Login = () => {
   const classes = useStyles();
 
-
+  const {register, errors, handleSubmit} = validationForm();
   const {iniciarSesion} = useContext(AuthContext);
 
   
 
   const initialForm = {
-    // email: 'crist@gmail.com',
-    email: 'juan@gmail6.com',
+    email: 'crist@gmail.com',
+
+
+    // email: 'juan@gmail6.com',
+    // email: 'juan@gmail14.com',
+
+    // email: 'loquesea70@gmail.com',
     password: '123'
   };
 
@@ -46,7 +51,7 @@ export const Login = () => {
 
 
   const handleLogin = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     
     iniciarSesion({email, password})
     
@@ -62,37 +67,54 @@ export const Login = () => {
         <Typography component="h1" variant="h5">
           Ingrese sus credenciales
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleLogin}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit(handleLogin)}>
           <TextField
             variant="outlined"
             margin="normal"
-            required
+            inputRef={register({
+              required: 'Debe proporcionar la dirección de correo electrónico!',
+              pattern: {
+                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Debe proporcionar una dirección de correo electrónico válida!',
+              },
+            })}
             fullWidth
             id="email"
-            label="Email Address"
+            label="Correo Electrónico"
             name="email"
             value={email}
-            autoComplete="email"
-            autoFocus
+            // autoFocus
+            error={!!errors.email}
             onChange={handleInputChange}
           />
+          {errors.email && (
+            <span className={classes.error}>{errors.email.message}</span>
+          )}
+
+
+
           <TextField
             variant="outlined"
             margin="normal"
-            required
+            inputRef={register({
+              required: 'Debe proporcionar una contraseña.',
+              minLength: {
+                value: 2,
+                message: 'Su contraseña debe tener más de 2 caracteres',
+              },
+            })}
             fullWidth
             name="password"
             value={password}
             label="Password"
             type="password"
+            error={!!errors.password}
             id="password"
-            autoComplete="current-password"
             onChange={handleInputChange}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
+           {errors.password && (
+            <span className={classes.error}>{errors.password.message}</span>
+          )}
           <Button
             type="submit"
             fullWidth
@@ -110,7 +132,7 @@ export const Login = () => {
             </Grid>
             <Grid item>
               <Link to="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"¿No tienes una cuenta? Inscríbete."}
               </Link>
             </Grid>
           </Grid>
